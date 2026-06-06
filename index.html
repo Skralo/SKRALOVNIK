@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skralovnik</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --deep: #05080a;
+      --ocean: #003042;
+      --gold: #f5d592;
+      --offwhite: #f0ece4;
+      --teal-glow: #0a4a5e;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--deep);
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(0,48,66,0.55) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 20% 80%, rgba(10,74,94,0.3) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 80% 20%, rgba(245,213,146,0.04) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .grain {
+      position: fixed;
+      inset: -200%;
+      width: 400%;
+      height: 400%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.028;
+      pointer-events: none;
+      animation: grain-shift 8s steps(10) infinite;
+    }
+
+    @keyframes grain-shift {
+      0%   { transform: translate(0, 0); }
+      10%  { transform: translate(-3%, -4%); }
+      20%  { transform: translate(-6%, 2%); }
+      30%  { transform: translate(2%, -5%); }
+      40%  { transform: translate(-4%, 7%); }
+      50%  { transform: translate(-3%, 3%); }
+      60%  { transform: translate(5%, -2%); }
+      70%  { transform: translate(-1%, 6%); }
+      80%  { transform: translate(4%, -3%); }
+      90%  { transform: translate(-5%, 1%); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* Wordmark — very subtle, bottom center */
+    .wordmark {
+      position: fixed;
+      bottom: 2.8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: rgba(240, 236, 228, 0.18);
+      user-select: none;
+      opacity: 0;
+      animation: fade-in 3s ease 1.5s forwards;
+    }
+
+    @keyframes fade-in {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="c"></canvas>
+  <div class="overlay"></div>
+  <div class="grain"></div>
+  <div class="wordmark">Skralovnik</div>
+
+  <script>
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+
+    let W, H, particles, time = 0;
+
+    const DEEP    = [5, 8, 10];
+    const OCEAN   = [0, 48, 66];
+    const TEAL    = [10, 74, 94];
+    const GOLD    = [245, 213, 146];
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      init();
+    }
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function rgba(c, a) { return `rgba(${c[0]},${c[1]},${c[2]},${a})`; }
+
+    class Star {
+      constructor() { this.reset(true); }
+      reset(init = false) {
+        this.x  = Math.random() * W;
+        this.y  = init ? Math.random() * H : -2;
+        this.r  = Math.random() * 0.8 + 0.1;
+        this.vy = Math.random() * 0.04 + 0.005;
+        this.life = 0;
+        this.maxLife = Math.random() * 600 + 400;
+        this.twinkleSpeed = Math.random() * 0.02 + 0.005;
+        this.twinkleOffset = Math.random() * Math.PI * 2;
+        this.gold = Math.random() < 0.06;
+      }
+      update() {
+        this.y  += this.vy;
+        this.life++;
+        if (this.y > H + 5 || this.life > this.maxLife) this.reset();
+      }
+      draw() {
+        const progress = Math.min(this.life / 80, 1) * Math.min((this.maxLife - this.life) / 80, 1);
+        const twinkle  = (Math.sin(time * this.twinkleSpeed + this.twinkleOffset) + 1) / 2;
+        const alpha    = progress * (0.3 + twinkle * 0.5);
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = this.gold ? rgba(GOLD, alpha * 0.7) : rgba([220, 235, 240], alpha);
+        ctx.fill();
+      }
+    }
+
+    class NebulaParticle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x  = Math.random() * W;
+        this.y  = Math.random() * H;
+        this.vx = (Math.random() - 0.5) * 0.06;
+        this.vy = (Math.random() - 0.5) * 0.04;
+        this.r  = Math.random() * 180 + 80;
+        this.life = 0;
+        this.maxLife = Math.random() * 1200 + 800;
+        this.type = Math.random(); // 0=ocean, 0.6=teal, 0.85=deep gold
+      }
+      color() {
+        if (this.type > 0.85) return rgba(GOLD,  0.012);
+        if (this.type > 0.55) return rgba(TEAL,  0.025);
+        return rgba(OCEAN, 0.04);
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.life++;
+        if (this.life > this.maxLife) this.reset();
+      }
+      draw() {
+        const progress = Math.min(this.life / 200, 1) * Math.min((this.maxLife - this.life) / 200, 1);
+        const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * progress);
+        g.addColorStop(0, this.color());
+        g.addColorStop(1, 'transparent');
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = g;
+        ctx.fill();
+      }
+    }
+
+    // Sparkle constellation — four 4-pointed stars (brand symbol)
+    function drawSparkle(cx, cy, size, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = rgba(GOLD, 1);
+      ctx.lineWidth = 0.6;
+
+      const offsets = [
+        [0, -size * 0.55],   // top
+        [0,  size * 0.55],   // bottom
+        [-size * 0.55, 0],   // left
+        [ size * 0.55, 0],   // right
+      ];
+
+      offsets.forEach(([ox, oy]) => {
+        const px = cx + ox, py = cy + oy;
+        // 4-pointed star at each offset position
+        for (let arm = 0; arm < 4; arm++) {
+          const angle = (arm / 4) * Math.PI * 2;
+          const len1  = size * 0.28;
+          const len2  = size * 0.07;
+          const aPerp = angle + Math.PI / 2;
+          ctx.beginPath();
+          ctx.moveTo(px + Math.cos(angle) * len1, py + Math.sin(angle) * len1);
+          ctx.quadraticCurveTo(
+            px + Math.cos(aPerp) * len2, py + Math.sin(aPerp) * len2,
+            px, py
+          );
+          ctx.quadraticCurveTo(
+            px - Math.cos(aPerp) * len2, py - Math.sin(aPerp) * len2,
+            px + Math.cos(angle + Math.PI) * len1 * 0.3, py + Math.sin(angle + Math.PI) * len1 * 0.3
+          );
+          ctx.strokeStyle = rgba(GOLD, 0.5);
+          ctx.stroke();
+        }
+        // center dot
+        ctx.beginPath();
+        ctx.arc(px, py, 0.6, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(GOLD, 0.6);
+        ctx.fill();
+      });
+
+      ctx.restore();
+    }
+
+    function init() {
+      particles = {
+        stars:   Array.from({ length: 260 }, () => new Star()),
+        nebulae: Array.from({ length: 12  }, () => new NebulaParticle()),
+      };
+    }
+
+    function drawBase() {
+      // Base gradient: very deep, not pure black
+      const base = ctx.createLinearGradient(0, 0, 0, H);
+      base.addColorStop(0,   `rgb(${DEEP[0]},${DEEP[1]},${DEEP[2]})`);
+      base.addColorStop(0.4, `rgb(3,9,13)`);
+      base.addColorStop(1,   `rgb(2,7,10)`);
+      ctx.fillStyle = base;
+      ctx.fillRect(0, 0, W, H);
+
+      // Subtle horizon glow (bottom)
+      const horiz = ctx.createRadialGradient(W/2, H, 0, W/2, H, H * 0.7);
+      horiz.addColorStop(0,   rgba(OCEAN, 0.18));
+      horiz.addColorStop(0.5, rgba(TEAL,  0.06));
+      horiz.addColorStop(1,   'transparent');
+      ctx.fillStyle = horiz;
+      ctx.fillRect(0, 0, W, H);
+    }
+
+    function frame() {
+      time++;
+      drawBase();
+
+      // Nebulae behind stars
+      ctx.globalCompositeOperation = 'screen';
+      particles.nebulae.forEach(p => { p.update(); p.draw(); });
+      ctx.globalCompositeOperation = 'source-over';
+
+      // Stars
+      particles.stars.forEach(p => { p.update(); p.draw(); });
+
+      // Brand symbol — center, subtle pulse
+      const pulse  = (Math.sin(time * 0.008) + 1) / 2;
+      const size   = 38 + pulse * 4;
+      const alpha  = 0.18 + pulse * 0.08;
+      drawSparkle(W / 2, H / 2, size, alpha);
+
+      requestAnimationFrame(frame);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    frame();
+  </script>
+</body>
+</html>
