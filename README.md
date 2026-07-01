@@ -1,2 +1,0 @@
-# SKRALOVNIK
-SKRALOVNIK brand Website
