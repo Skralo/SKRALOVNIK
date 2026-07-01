@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" role="img" aria-label="MitroCare">
+  <title>MitroCare horizontal lockup</title>
+  <defs>
+    <linearGradient id="mc-gold-l" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E7C66B"/>
+      <stop offset="1" stop-color="#9A7A38"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="48" height="48" rx="11" fill="#161619"/>
+  <rect x="9" y="9" width="46" height="46" rx="10" fill="none" stroke="#C9A24B" stroke-opacity="0.22"/>
+  <g transform="translate(13,8) skewX(-7)">
+    <path d="M10 36 L10 13 L23 27 L36 13 L36 36" fill="none" stroke="url(#mc-gold-l)"
+          stroke-width="6" stroke-linejoin="miter" stroke-linecap="square"/>
+  </g>
+  <text x="74" y="41" font-family="Archivo, 'Arial Black', sans-serif" font-weight="900"
+        font-size="27" letter-spacing="0.5" fill="#F3EEE4">MITROCARE</text>
+</svg>
