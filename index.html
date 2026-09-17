@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>SKRALOVNIK — Anže Skralovnik</title>
   <meta name="description" content="SKRALOVNIK. Clarity, discipline and systems for personal and business growth.">
-  <meta name="theme-color" content="#00202d">
+  <meta name="theme-color" content="#050607">
   <meta property="og:title" content="SKRALOVNIK">
   <meta property="og:description" content="Build the system. Act every day.">
   <meta property="og:image" content="assets/portrait.jpg">
@@ -23,15 +23,18 @@
     </symbol>
   </svg>
 
-  <main class="page">
-    <header class="crest reveal">
-      <img class="crest__logo" src="assets/logo.svg" alt="SKRALOVNIK" width="266" height="116">
-    </header>
+  <!-- Hero: background video (working · sauna · training · people) under a dark veil, crest on top -->
+  <header class="hero">
+    <video class="hero__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <!-- TODO(Anže): drop the edited clip in as assets/hero.mp4 -->
+      <source src="assets/hero.mp4" type="video/mp4">
+    </video>
+    <div class="hero__veil" aria-hidden="true"></div>
+    <img class="hero__logo reveal" src="assets/logo.svg" alt="SKRALOVNIK" width="266" height="116">
+  </header>
 
+  <main class="page">
     <section class="intro" aria-labelledby="name">
-      <div class="portrait reveal">
-        <img src="assets/portrait.jpg" alt="Anže Skralovnik" width="480" height="480">
-      </div>
       <h1 id="name" class="intro__name reveal">Anže Skralovnik</h1>
       <p class="intro__line reveal">Build the system. <em>Act every day.</em></p>
       <p class="intro__pillars reveal">

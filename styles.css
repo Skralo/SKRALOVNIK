@@ -1,11 +1,10 @@
 /* SKRALOVNIK — links page v1
-   Direction: white embroidery on deep #00202d textile (Branding doc §12).
+   Direction: near-black canvas, video hero, white stitched details (Branding doc §5, §12).
    Mobile first; wider screens keep the same single column. */
 
 :root {
   /* colour */
-  --azure: #00202d;          /* brand primary — the fabric */
-  --azure-deep: #00141d;     /* shadow side of the fabric */
+  --black: #050607;          /* near-black canvas */
   --thread: #f4f1ea;         /* off-white stitching / text */
   --thread-soft: rgba(244, 241, 234, 0.72);
   --thread-faint: rgba(244, 241, 234, 0.42);
@@ -35,7 +34,7 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   min-height: 100svh;
-  background: var(--azure);
+  background: var(--black);
   color: var(--thread);
   font-family: var(--serif);
   font-size: 18px;
@@ -44,62 +43,49 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* The fabric: real textile crop + soft vignette. Fixed layer (iOS-safe, no background-attachment). */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(120% 80% at 50% 20%, transparent 40%, rgba(0, 12, 18, 0.55) 100%),
-    url("assets/textile.jpg") center top / 100% auto repeat-y,
-    var(--azure);
-}
-
 .page {
   width: 100%;
   max-width: var(--col);
   margin: 0 auto;
-  padding: calc(28px + env(safe-area-inset-top)) var(--gutter) calc(40px + env(safe-area-inset-bottom));
+  padding: 0 var(--gutter) calc(40px + env(safe-area-inset-bottom));
 }
 
-/* ── Crest ─────────────────────────────────────── */
-.crest { display: flex; justify-content: center; }
-.crest__logo {
-  width: 150px;
-  height: auto;
-  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.5));
-}
-
-/* ── Intro ─────────────────────────────────────── */
-.intro { text-align: center; margin-top: 30px; }
-
-.portrait {
+/* ── Hero ──────────────────────────────────────── */
+.hero {
   position: relative;
-  width: 112px;
-  height: 112px;
-  margin: 0 auto;
-  border-radius: 50%;
-  padding: 7px;
+  display: grid;
+  place-items: center;
+  height: 62svh;
+  min-height: 380px;
+  max-height: 640px;
+  overflow: hidden;
+  background: var(--black);
 }
-/* stitched ring around the portrait */
-.portrait::before {
-  content: "";
+.hero__video {
   position: absolute;
   inset: 0;
-  border-radius: 50%;
-  border: 1.5px dashed var(--thread-soft);
-  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.6));
-}
-.portrait img {
-  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
-  filter: grayscale(0.25) contrast(1.02);
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.4), 0 6px 18px rgba(0, 0, 0, 0.35);
+  filter: grayscale(0.2) contrast(1.05);
 }
+/* veil: even darkening so the crest reads, then a fade into the page black */
+.hero__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5, 6, 7, 0.35) 0%, rgba(5, 6, 7, 0.2) 45%, var(--black) 100%),
+    rgba(5, 6, 7, 0.35);
+}
+.hero__logo {
+  position: relative;
+  width: 210px;
+  height: auto;
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.6));
+}
+
+/* ── Intro ─────────────────────────────────────── */
+.intro { position: relative; text-align: center; margin-top: -8px; }
 
 .intro__name {
   margin: 20px 0 0;
@@ -286,7 +272,5 @@ body::before {
 
 /* Larger screens: same column, more breathing room */
 @media (min-width: 720px) {
-  .page { padding-top: 64px; }
-  .crest__logo { width: 180px; }
-  .portrait { width: 128px; height: 128px; }
+  .hero__logo { width: 250px; }
 }
