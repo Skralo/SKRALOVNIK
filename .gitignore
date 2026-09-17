@@ -1,0 +1,5 @@
+.DS_Store
+# DRAFTPIN — local review tool, never shipped
+draftpin.dev.js
+draftpin-server.js
+.draftpin/

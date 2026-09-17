@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SKRALOVNIK — Anže Skralovnik</title>
+  <meta name="description" content="SKRALOVNIK. Clarity, discipline and systems for personal and business growth.">
+  <meta name="theme-color" content="#00202d">
+  <meta property="og:title" content="SKRALOVNIK">
+  <meta property="og:description" content="Build the system. Act every day.">
+  <meta property="og:image" content="assets/portrait.jpg">
+  <link rel="icon" href="assets/symbol.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Brand star (simplified single star of the SKRALOVNIK symbol) -->
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <symbol id="star" viewBox="-10 -10 20 20">
+      <path d="M0-10C.6-2.2 2.2-.6 10 0 2.2.6.6 2.2 0 10-.6 2.2-2.2.6-10 0-2.2-.6-.6-2.2 0-10Z"/>
+    </symbol>
+  </svg>
+
+  <main class="page">
+    <header class="crest reveal">
+      <img class="crest__logo" src="assets/logo.svg" alt="SKRALOVNIK" width="266" height="116">
+    </header>
+
+    <section class="intro" aria-labelledby="name">
+      <div class="portrait reveal">
+        <img src="assets/portrait.jpg" alt="Anže Skralovnik" width="480" height="480">
+      </div>
+      <h1 id="name" class="intro__name reveal">Anže Skralovnik</h1>
+      <p class="intro__line reveal">Build the system. <em>Act every day.</em></p>
+      <p class="intro__pillars reveal">
+        <span>Personal growth</span>
+        <svg class="pip" aria-hidden="true"><use href="#star"/></svg>
+        <span>Business growth</span>
+        <svg class="pip" aria-hidden="true"><use href="#star"/></svg>
+        <span>AI</span>
+      </p>
+    </section>
+
+    <nav class="links" aria-label="Links">
+      <!-- TODO(Anže): replace every href="#" with the real destination -->
+      <a class="link link--featured stitched reveal" href="#" data-todo="application / call link">
+        <span class="link__eyebrow">Private · 1:1</span>
+        <span class="link__title">Work with me</span>
+        <span class="link__meta">Build your system with me</span>
+        <svg class="link__mark" aria-hidden="true"><use href="#star"/></svg>
+      </a>
+
+      <a class="link stitched reveal" href="#" data-todo="SKRALOVNIK.OS page / waitlist">
+        <span class="link__title">SKRALOVNIK.OS</span>
+        <span class="link__meta">The operating system behind the work</span>
+        <span class="link__arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="link stitched reveal" href="#" data-todo="Skill Stacks subpage">
+        <span class="link__title">Skill Stacks</span>
+        <span class="link__meta">AI skill stacks for founders</span>
+        <span class="link__arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="link stitched reveal" href="https://www.instagram.com/anzeskralovnik/" rel="noopener">
+        <span class="link__title">Instagram</span>
+        <span class="link__meta">@anzeskralovnik</span>
+        <span class="link__arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="link stitched reveal" href="#" data-todo="contact e-mail (mailto:)">
+        <span class="link__title">Write to me</span>
+        <span class="link__meta">Collaborations and questions</span>
+        <span class="link__arrow" aria-hidden="true">→</span>
+      </a>
+    </nav>
+
+    <footer class="foot reveal">
+      <svg class="foot__star" aria-hidden="true"><use href="#star"/></svg>
+      <p class="foot__quote"><em>Let your life become proof of your principles.</em></p>
+      <p class="foot__copy">© 2026 SKRALOVNIK</p>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+
+  <!-- DRAFTPIN dev tool: loads only on localhost. Never runs in production. -->
+  <script>
+    if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
+      var dp = document.createElement("script");
+      dp.src = "./draftpin.dev.js";
+      document.body.appendChild(dp);
+    }
+  </script>
+</body>
+</html>
