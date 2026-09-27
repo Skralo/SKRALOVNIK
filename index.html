@@ -7,85 +7,23 @@
   <meta name="description" content="SKRALOVNIK. Clarity, discipline and systems for personal and business growth.">
   <meta name="theme-color" content="#050607">
   <meta property="og:title" content="SKRALOVNIK">
-  <meta property="og:description" content="Build the system. Act every day.">
-  <meta property="og:image" content="assets/portrait.jpg">
+  <meta property="og:image" content="assets/hero-poster.jpg">
   <link rel="icon" href="assets/symbol.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Brand star (simplified single star of the SKRALOVNIK symbol) -->
-  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
-    <symbol id="star" viewBox="-10 -10 20 20">
-      <path d="M0-10C.6-2.2 2.2-.6 10 0 2.2.6.6 2.2 0 10-.6 2.2-2.2.6-10 0-2.2-.6-.6-2.2 0-10Z"/>
-    </symbol>
-  </svg>
-
-  <!-- Hero: background video (working · sauna · training · people) under a dark veil, crest on top -->
+  <!-- Hero: 16:9 video, always full width. Silent by design. -->
   <header class="hero">
-    <!-- Silent by design. Phones get a 3:4 centre crop, wider screens the full 16:9 cut. -->
     <video class="hero__video" autoplay muted loop playsinline preload="auto"
-           poster="assets/hero-poster-mobile.jpg" aria-hidden="true">
+           poster="assets/hero-poster.jpg" aria-hidden="true">
       <source src="assets/hero-mobile.mp4" type="video/mp4" media="(max-width: 719px)">
       <source src="assets/hero-desktop.mp4" type="video/mp4">
     </video>
     <div class="hero__veil" aria-hidden="true"></div>
-    <h1 class="hero__title reveal">
+    <h1 class="hero__title">
       <img class="hero__logo" src="assets/logo.svg" alt="SKRALOVNIK" width="266" height="116">
     </h1>
   </header>
-
-  <main class="page">
-    <section class="intro">
-      <p class="intro__pillars reveal">
-        <span>Personal growth</span>
-        <svg class="pip" aria-hidden="true"><use href="#star"/></svg>
-        <span>Business growth</span>
-        <svg class="pip" aria-hidden="true"><use href="#star"/></svg>
-        <span>AI</span>
-      </p>
-    </section>
-
-    <nav class="links" aria-label="Links">
-      <!-- TODO(Anže): replace every href="#" with the real destination -->
-      <a class="link link--featured stitched reveal" href="#" data-todo="application / call link">
-        <span class="link__eyebrow">Private · 1:1</span>
-        <span class="link__title">Work with me</span>
-        <span class="link__meta">Build your system with me</span>
-        <svg class="link__mark" aria-hidden="true"><use href="#star"/></svg>
-      </a>
-
-      <a class="link stitched reveal" href="#" data-todo="SKRALOVNIK.OS page / waitlist">
-        <span class="link__title">SKRALOVNIK.OS</span>
-        <span class="link__meta">The operating system behind the work</span>
-        <span class="link__arrow" aria-hidden="true">→</span>
-      </a>
-
-      <a class="link stitched reveal" href="#" data-todo="Skill Stacks subpage">
-        <span class="link__title">Skill Stacks</span>
-        <span class="link__meta">AI skill stacks for founders</span>
-        <span class="link__arrow" aria-hidden="true">→</span>
-      </a>
-
-      <a class="link stitched reveal" href="https://www.instagram.com/anzeskralovnik/" rel="noopener">
-        <span class="link__title">Instagram</span>
-        <span class="link__meta">@anzeskralovnik</span>
-        <span class="link__arrow" aria-hidden="true">→</span>
-      </a>
-
-      <a class="link stitched reveal" href="#" data-todo="contact e-mail (mailto:)">
-        <span class="link__title">Write to me</span>
-        <span class="link__meta">Collaborations and questions</span>
-        <span class="link__arrow" aria-hidden="true">→</span>
-      </a>
-    </nav>
-
-    <footer class="foot reveal">
-      <p class="foot__copy">© 2026 SKRALOVNIK</p>
-    </footer>
-  </main>
 
   <script src="main.js"></script>
 

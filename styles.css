@@ -1,30 +1,8 @@
-/* SKRALOVNIK — links page v1
-   Direction: near-black canvas, video hero, white stitched details (Branding doc §5, §12).
-   Mobile first; wider screens keep the same single column. */
+/* SKRALOVNIK — v1
+   Near-black canvas, one full-width 16:9 video band, logo on top. */
 
 :root {
-  /* colour */
-  --black: #050607;          /* near-black canvas */
-  --thread: #f4f1ea;         /* off-white stitching / text */
-  --thread-soft: rgba(244, 241, 234, 0.72);
-  --thread-faint: rgba(244, 241, 234, 0.42);
-  --gold: #f9c706;           /* purpose-only accent: the featured link's star */
-
-  /* type */
-  --serif: "Cormorant Garamond", "Angsana New", "Times New Roman", serif;
-  --fs-name: clamp(2.1rem, 9vw, 2.6rem);
-  --fs-line: 1.3rem;
-  --fs-title: 1.45rem;
-  --fs-meta: 1.02rem;
-  --fs-caps: 0.72rem;
-
-  /* space & shape */
-  --gutter: 20px;
-  --col: 440px;
-  --radius: 16px;
-
-  /* embroidery depth */
-  --stitch-lift: 0 1px 0 rgba(0, 0, 0, 0.55), 0 0 1px rgba(244, 241, 234, 0.25);
+  --black: #050607;   /* near-black canvas */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -34,20 +12,9 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   min-height: 100svh;
+  display: grid;
+  align-content: center;   /* the band sits in the middle of the screen */
   background: var(--black);
-  color: var(--thread);
-  font-family: var(--serif);
-  font-size: 18px;
-  line-height: 1.45;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-.page {
-  width: 100%;
-  max-width: var(--col);
-  margin: 0 auto;
-  padding: 0 var(--gutter) calc(40px + env(safe-area-inset-bottom));
 }
 
 /* ── Hero ──────────────────────────────────────── */
@@ -55,9 +22,9 @@ body {
   position: relative;
   display: grid;
   place-items: center;
-  height: 62svh;
-  min-height: 380px;
-  max-height: 640px;
+  width: 100%;
+  aspect-ratio: 16 / 9;    /* the whole video, edge to edge */
+  max-height: 100svh;      /* ultra-wide screens: trim top/bottom rather than overflow */
   overflow: hidden;
   background: var(--black);
 }
@@ -69,187 +36,32 @@ body {
   object-fit: cover;
   filter: grayscale(0.2) contrast(1.05);
 }
-/* veil: even darkening so the crest reads, then a fade into the page black */
+/* veil: light overall shade, soft shadow behind the logo, edges melt into the black */
 .hero__veil {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(60% 22% at 50% 50%, rgba(5, 6, 7, 0.45), transparent 100%),
-    linear-gradient(180deg, rgba(5, 6, 7, 0.35) 0%, rgba(5, 6, 7, 0.2) 45%, var(--black) 100%),
-    rgba(5, 6, 7, 0.35);
+    radial-gradient(38% 30% at 50% 50%, rgba(5, 6, 7, 0.45), transparent 100%),
+    linear-gradient(180deg, var(--black) 0%, transparent 14%, transparent 86%, var(--black) 100%),
+    rgba(5, 6, 7, 0.3);
 }
 .hero__title {
   position: relative;
   margin: 0;
   line-height: 0;
+  animation: rise 600ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
 }
 .hero__logo {
-  width: 210px;
+  width: clamp(130px, 30vw, 320px);
   height: auto;
   filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.6));
 }
 
-/* ── Intro ─────────────────────────────────────── */
-.intro { position: relative; text-align: center; margin-top: 4px; }
-
-.intro__pillars {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 6px 8px;
-  margin: 0;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  white-space: nowrap;
-  text-transform: uppercase;
-  color: var(--thread-faint);
-}
-.pip { width: 7px; height: 7px; fill: var(--thread-faint); }
-
-/* ── Links ─────────────────────────────────────── */
-.links {
-  display: grid;
-  gap: 12px;
-  margin-top: 34px;
-}
-
-.link {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-areas:
-    "title arrow"
-    "meta  arrow";
-  align-items: center;
-  column-gap: 12px;
-  min-height: 76px;
-  padding: 16px 24px;
-  border-radius: var(--radius);
-  color: var(--thread);
-  text-decoration: none;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(0, 0, 0, 0.12));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.25);
-  -webkit-tap-highlight-color: transparent;
-  transition: transform 160ms ease-out, background-color 160ms ease-out;
-}
-
-.link__title {
-  grid-area: title;
-  font-size: var(--fs-title);
-  font-weight: 500;
-  line-height: 1.15;
-  text-shadow: var(--stitch-lift);
-}
-.link__meta {
-  grid-area: meta;
-  font-size: var(--fs-meta);
-  font-style: italic;
-  color: var(--thread-soft);
-}
-.link__arrow {
-  grid-area: arrow;
-  font-size: 1.3rem;
-  color: var(--thread-faint);
-  transition: transform 160ms ease-out, color 160ms ease-out;
-}
-
-/* Featured: more fabric, gold star as its single accent */
-.link--featured {
-  grid-template-areas:
-    "eyebrow mark"
-    "title   mark"
-    "meta    mark";
-  min-height: 108px;
-  padding: 20px 24px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.18));
-}
-.link--featured .link__title { font-size: 1.85rem; }
-.link__eyebrow {
-  grid-area: eyebrow;
-  font-size: var(--fs-caps);
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--thread-soft);
-}
-.link__mark {
-  grid-area: mark;
-  width: 22px;
-  height: 22px;
-  fill: var(--gold);
-  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.6));
-  transition: transform 300ms ease-out;
-}
-
-/* Stitch line (drawn by main.js) */
-.stitch {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  pointer-events: none;
-}
-.stitch rect {
-  x: 5px;
-  y: 5px;
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
-  rx: 11px;
-  fill: none;
-  stroke-width: 1.2;
-  stroke-linecap: round;
-  stroke-dasharray: 3.2 2.6;
-}
-.stitch__shadow { stroke: rgba(0, 0, 0, 0.55); transform: translateY(1px); }
-.stitch__thread { stroke: rgba(244, 241, 234, 0.5); }
-.link--featured .stitch__thread { stroke: var(--thread-soft); }
-
-/* States */
-.link:active { transform: scale(0.985); }
-.link:focus-visible {
-  outline: 2px solid var(--thread);
-  outline-offset: 3px;
-}
-@media (hover: hover) {
-  .link:hover .link__arrow { transform: translateX(3px); color: var(--thread); }
-  .link:hover .link__mark { transform: rotate(45deg); }
-}
-
-/* ── Footer ────────────────────────────────────── */
-.foot {
-  margin-top: 36px;
-  text-align: center;
-}
-.foot__copy {
-  margin: 0;
-  font-size: var(--fs-caps);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--thread-faint);
-}
-
-/* ── Entrance ──────────────────────────────────── */
-.reveal { opacity: 1; }
-.is-ready .reveal {
-  animation: rise 480ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
-  animation-delay: calc(var(--i, 0) * 35ms);
-}
 @keyframes rise {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .is-ready .reveal { animation: none; }
-  .link, .link__arrow, .link__mark { transition: none; }
-}
-
-/* Larger screens: same column, more breathing room */
-@media (min-width: 720px) {
-  .hero__logo { width: 250px; }
+  .hero__title { animation: none; }
 }
