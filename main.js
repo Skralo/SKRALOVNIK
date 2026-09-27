@@ -27,3 +27,8 @@ if (heroVideo && window.matchMedia("(prefers-reduced-motion: reduce)").matches) 
   heroVideo.removeAttribute("autoplay");
   heroVideo.pause();
 }
+
+// Wider screens get the 16:9 poster to match the desktop cut.
+if (heroVideo && window.matchMedia("(min-width: 720px)").matches) {
+  heroVideo.poster = "assets/hero-poster-desktop.jpg";
+}

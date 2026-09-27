@@ -74,36 +74,23 @@ body {
   position: absolute;
   inset: 0;
   background:
+    radial-gradient(60% 22% at 50% 50%, rgba(5, 6, 7, 0.45), transparent 100%),
     linear-gradient(180deg, rgba(5, 6, 7, 0.35) 0%, rgba(5, 6, 7, 0.2) 45%, var(--black) 100%),
     rgba(5, 6, 7, 0.35);
 }
-.hero__logo {
+.hero__title {
   position: relative;
+  margin: 0;
+  line-height: 0;
+}
+.hero__logo {
   width: 210px;
   height: auto;
   filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.6));
 }
 
 /* ── Intro ─────────────────────────────────────── */
-.intro { position: relative; text-align: center; margin-top: -8px; }
-
-.intro__name {
-  margin: 20px 0 0;
-  font-size: var(--fs-name);
-  font-weight: 500;
-  line-height: 1.05;
-  letter-spacing: 0.01em;
-  text-shadow: var(--stitch-lift);
-  text-wrap: balance;
-}
-
-.intro__line {
-  margin: 8px 0 0;
-  font-size: var(--fs-line);
-  color: var(--thread-soft);
-  text-shadow: var(--stitch-lift);
-}
-.intro__line em { color: var(--thread); }
+.intro { position: relative; text-align: center; margin-top: 4px; }
 
 .intro__pillars {
   display: flex;
@@ -111,7 +98,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: 6px 8px;
-  margin: 18px 0 0;
+  margin: 0;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -235,19 +222,11 @@ body {
 
 /* ── Footer ────────────────────────────────────── */
 .foot {
-  margin-top: 44px;
+  margin-top: 36px;
   text-align: center;
 }
-.foot__star { width: 14px; height: 14px; fill: var(--thread-soft); }
-.foot__quote {
-  margin: 10px auto 0;
-  max-width: 26ch;
-  font-size: 1.12rem;
-  color: var(--thread-soft);
-  text-wrap: balance;
-}
 .foot__copy {
-  margin: 14px 0 0;
+  margin: 0;
   font-size: var(--fs-caps);
   letter-spacing: 0.22em;
   text-transform: uppercase;

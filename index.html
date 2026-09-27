@@ -25,18 +25,20 @@
 
   <!-- Hero: background video (working · sauna · training · people) under a dark veil, crest on top -->
   <header class="hero">
-    <video class="hero__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-      <!-- TODO(Anže): drop the edited clip in as assets/hero.mp4 -->
-      <source src="assets/hero.mp4" type="video/mp4">
+    <!-- Silent by design. Phones get a 3:4 centre crop, wider screens the full 16:9 cut. -->
+    <video class="hero__video" autoplay muted loop playsinline preload="auto"
+           poster="assets/hero-poster-mobile.jpg" aria-hidden="true">
+      <source src="assets/hero-mobile.mp4" type="video/mp4" media="(max-width: 719px)">
+      <source src="assets/hero-desktop.mp4" type="video/mp4">
     </video>
     <div class="hero__veil" aria-hidden="true"></div>
-    <img class="hero__logo reveal" src="assets/logo.svg" alt="SKRALOVNIK" width="266" height="116">
+    <h1 class="hero__title reveal">
+      <img class="hero__logo" src="assets/logo.svg" alt="SKRALOVNIK" width="266" height="116">
+    </h1>
   </header>
 
   <main class="page">
-    <section class="intro" aria-labelledby="name">
-      <h1 id="name" class="intro__name reveal">Anže Skralovnik</h1>
-      <p class="intro__line reveal">Build the system. <em>Act every day.</em></p>
+    <section class="intro">
       <p class="intro__pillars reveal">
         <span>Personal growth</span>
         <svg class="pip" aria-hidden="true"><use href="#star"/></svg>
@@ -81,8 +83,6 @@
     </nav>
 
     <footer class="foot reveal">
-      <svg class="foot__star" aria-hidden="true"><use href="#star"/></svg>
-      <p class="foot__quote"><em>Let your life become proof of your principles.</em></p>
       <p class="foot__copy">© 2026 SKRALOVNIK</p>
     </footer>
   </main>
