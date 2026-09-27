@@ -1,9 +1,13 @@
 /* SKRALOVNIK — v1
    Near-black canvas. Hero = full-width 16:9 video with the logo on top;
-   the page's sections follow below it. Square edges throughout: no radii, no vignettes. */
+   the page's sections follow below it. Square edges throughout. */
 
 :root {
-  --black: #050607;   /* near-black canvas */
+  --black: #050607;                          /* near-black canvas */
+  --thread: rgba(244, 241, 234, 0.9);        /* off-white type */
+  --thread-faint: rgba(244, 241, 234, 0.16); /* hairline track */
+  --serif: "Cormorant Garamond", "Times New Roman", serif;
+  --edge: clamp(16px, 4vw, 56px);            /* inset for hero furniture */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -35,18 +39,43 @@ body {
   object-fit: cover;
   filter: grayscale(0.2) contrast(1.05);
 }
-/* veil: one even shade over the whole frame, no shapes */
-.hero__veil {
-  position: absolute;
-  inset: 0;
-  background: rgba(5, 6, 7, 0.45);
-}
 /* never show the browser's own play button (iOS Low Power Mode blocks autoplay) */
 .hero__video::-webkit-media-controls,
 .hero__video::-webkit-media-controls-start-playback-button {
   display: none !important;
   -webkit-appearance: none;
 }
+
+/* Veil, three layers:
+   1. shadow behind the logo — eased stops, so it fades out with no visible rim
+      (a straight two-stop fade leaves a faint ring where it ends)
+   2. bottom scrim — keeps the chapter caption legible on bright shots
+   3. one even shade over the whole frame */
+.hero__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 44% 42% at 50% 50%,
+      rgba(5, 6, 7, 0.40) 0%,
+      rgba(5, 6, 7, 0.34) 19%,
+      rgba(5, 6, 7, 0.27) 34%,
+      rgba(5, 6, 7, 0.21) 47%,
+      rgba(5, 6, 7, 0.16) 56.5%,
+      rgba(5, 6, 7, 0.12) 65%,
+      rgba(5, 6, 7, 0.085) 73%,
+      rgba(5, 6, 7, 0.055) 80.2%,
+      rgba(5, 6, 7, 0.03) 86.1%,
+      rgba(5, 6, 7, 0.016) 91%,
+      rgba(5, 6, 7, 0.006) 95.2%,
+      rgba(5, 6, 7, 0) 100%),
+    linear-gradient(180deg,
+      rgba(5, 6, 7, 0) 55%,
+      rgba(5, 6, 7, 0.08) 70%,
+      rgba(5, 6, 7, 0.2) 85%,
+      rgba(5, 6, 7, 0.32) 100%),
+    rgba(5, 6, 7, 0.3);
+}
+
 .hero__title {
   position: relative;
   margin: 0;
@@ -56,15 +85,62 @@ body {
 .hero__logo {
   width: clamp(150px, 40vw, 340px);
   height: auto;
-  /* shadow hugs the letterforms: legible over bright shots without a visible shape */
-  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.55)) drop-shadow(0 1px 10px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.6));
+}
+
+/* Chapter caption — changes on each cut of the film */
+.hero__chapter {
+  position: absolute;
+  left: var(--edge);
+  bottom: calc(var(--edge) * 0.8);
+  display: flex;
+  align-items: center;
+  gap: 0.9em;
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(10px, 0.55vw + 8px, 15px);
+  line-height: 1;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--thread);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
+}
+.hero__rule {
+  width: 1.6em;
+  height: 1px;
+  background: currentColor;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+.hero__word.is-in { animation: word-in 320ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+
+/* Hairline progress along the bottom edge — one pass of the loop */
+.hero__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--thread-faint);
+}
+.hero__progress span {
+  display: block;
+  height: 100%;
+  background: rgba(244, 241, 234, 0.6);
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
 }
 
 @keyframes rise {
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: none; }
 }
+@keyframes word-in {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: none; }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .hero__title { animation: none; }
+  .hero__title, .hero__word.is-in { animation: none; }
 }

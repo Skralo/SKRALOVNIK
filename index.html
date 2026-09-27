@@ -9,6 +9,10 @@
   <meta property="og:title" content="SKRALOVNIK">
   <meta property="og:image" content="assets/hero-poster.jpg">
   <link rel="icon" href="assets/symbol.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- only the letters the chapter words use -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&text=ABCDEILMNOPRSTUVabcdeilmnoprstuv&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -23,6 +27,12 @@
     <h1 class="hero__title">
       <img class="hero__logo" src="assets/logo.svg" alt="SKRALOVNIK" width="266" height="116">
     </h1>
+    <!-- Chapter of the film on screen; main.js switches it on each cut -->
+    <p class="hero__chapter" aria-hidden="true">
+      <span class="hero__rule"></span>
+      <span class="hero__word">Present</span>
+    </p>
+    <div class="hero__progress" aria-hidden="true"><span></span></div>
   </header>
 
   <script src="main.js"></script>
