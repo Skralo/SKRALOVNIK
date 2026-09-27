@@ -1,5 +1,6 @@
 /* SKRALOVNIK — v1
-   Near-black canvas, one full-width 16:9 video band, logo on top. */
+   Near-black canvas. Hero = full-width 16:9 video with the logo on top;
+   the page's sections follow below it. */
 
 :root {
   --black: #050607;   /* near-black canvas */
@@ -12,8 +13,6 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   min-height: 100svh;
-  display: grid;
-  align-content: center;   /* the band sits in the middle of the screen */
   background: var(--black);
 }
 
@@ -42,7 +41,7 @@ body {
   inset: 0;
   background:
     radial-gradient(38% 30% at 50% 50%, rgba(5, 6, 7, 0.45), transparent 100%),
-    linear-gradient(180deg, var(--black) 0%, transparent 14%, transparent 86%, var(--black) 100%),
+    linear-gradient(180deg, transparent 80%, var(--black) 100%),
     rgba(5, 6, 7, 0.3);
 }
 .hero__title {

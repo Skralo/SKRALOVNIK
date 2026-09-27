@@ -1,6 +1,6 @@
 # SKRALOVNIK — website
 
-v1: one screen. A full-width 16:9 video band (working · training · running · people ·
+v1: hero section — a full-width 16:9 video band at the top (working · training · running · people ·
 sauna · gym) on a near-black page, the SKRALOVNIK logo on top. Silent by design.
 
 Static site: `index.html` · `styles.css` · `main.js` · `assets/`. No build step.
