@@ -1,0 +1,8 @@
+.DS_Store
+# DRAFTPIN — local review tool, never shipped
+draftpin.dev.js
+draftpin-server.js
+.draftpin/
+
+# Raw source footage stays out of the repo (encoded copies live in assets/)
+/*.mp4
